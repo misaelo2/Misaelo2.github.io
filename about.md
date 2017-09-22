@@ -1,5 +1,7 @@
-## Bienvenidos a mi pagina principal 
+## Veo que siges interesado 
 
-En esta pagina iré documentando las diferentes **practicas** que haga durante el curso 
+Soy alumno de segundo del ciclo superior en Administracion de Sistemas informaticos  , del centro gonzalo nazareno .
 
-[Aqui podreis saber mas sobre mi](https://misaelo2.github.io./about)
+Realizo esta pagina como motivo  de una **practica** de la asignatura de *implantacion de aplicaciones web* 
+
+![Aqui teneis una foto de un gato](/home/misael/misaelo2.github.io/gatos.jpg)
