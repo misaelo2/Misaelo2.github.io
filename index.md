@@ -1,7 +1,9 @@
 ---
 layout: default
 ---
-##Bienvenidos a mi Pagina 
+
+
+#Bienvenidos a mi Pagina 
 
 En este Blog subire contenido de mis Practicas para que lo podais disfrutar todo el mundo .
 
