@@ -37,31 +37,31 @@ Listo! ahora ya podremos configurar nuestro sitio web e incluso tener varios usa
 Esto ya es mas complicado , se trata de , mediante un gestor de contenido web , en mi caso "drupal 7 " descargar y configurar tu propio sitio web :
  
  
-* instalamos el paquete de drupal : 
+ *instalamos el paquete de drupal : 
 
-*descomprimimos el paquete : 
+ *descomprimimos el paquete : 
 ~~~
 	tar -xcfz 
 ~~~
-*lo movemos a nuestro sitios de apache ( /var/www/ )
+ *lo movemos a nuestro sitios de apache ( /var/www/ )
 ~~~
 	mv drupal-7.0  /var/www/
 
 ~~~
 
-*creamos usuario para la base de datos :
+ *creamos usuario para la base de datos :
 ~~~	
 	createuser --pwprompt --encrypted --no-adduser --no-createdb drupal 
 ~~~
-*creamos la base de datos 
+ *creamos la base de datos 
 ~~~
 	createdb --encoding=UNICODE --owner=username CMSservidor
 ~~~
-*Si no tenemos en /var/www/drupal un archivo llamado settings.php o default-settings.php pasamos al paso 4 
+ *Si no tenemos en /var/www/drupal un archivo llamado settings.php o default-settings.php pasamos al paso 4 
 
-*Ponemos en virtual hosting el servidor y instalamos el install.php 
+ *Ponemos en virtual hosting el servidor y instalamos el install.php 
 
-*si nos aparecen varios errores , echamos mano de la documentacion y los solucionamos , en mi caso :
+ *si nos aparecen varios errores , echamos mano de la documentacion y los solucionamos , en mi caso :
 		
 	*modificar permisos de archivos para escribir :  chmod o+w sites/default/files  
 
@@ -74,7 +74,7 @@ Esto ya es mas complicado , se trata de , mediante un gestor de contenido web , 
   								  apt-get install  php7.0-gd
 
 
-*Ahora le  indicamos nuestra base de datos previamente creada y el usuario y contraseña para credenciarse  
+ *Ahora le  indicamos nuestra base de datos previamente creada y el usuario y contraseña para credenciarse  
 
 
 Si todo va bien , ahora procederemos a configurar nuestro site 
