@@ -1,7 +1,10 @@
 ---
 layout: default
 ---
-#Practica 1 
+
+
+
+##Practica 1 
 
 
 Esta practica se compone de las siguientes tareas :
