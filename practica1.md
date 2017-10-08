@@ -6,6 +6,9 @@ layout: default
 
 1. <a href="#practica1">Tarea LAMP</a>
 2. <a href="#practica2">Tarea CMS </a>
+## tarea3 
   
-  
-###<a name="practica1">Instalacion pila LAMP</a> 
+### <a name="practica1">Instalacion pila LAMP</a> 
+
+
+[tarea3](#tarea3)
