@@ -2,12 +2,8 @@
 layout: default
 ---
 
+# Hola!
 
+_Me llamo misael y estudio sistemas en el IES Gonzalo Nazareno_
 
-#Practica 1 
-
-
-sta practica se compone de las siguientes tareas :
-[##1.  La pila LAMP][practica]
-
-
+[atras](./)
