@@ -9,7 +9,7 @@ layout: default
 
 
 
-##Tarea1 
+## Tarea1 
  
 La pila LAMP es el acronimo de L (linux ) , A (apache2) , M ( MySQL) , P (php) y se refiere a la capacidad de poer gestionar nuestros sitios virtuales como queramos al tener instalados estos componentes , a continuacion , os enseño como :
 
