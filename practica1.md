@@ -85,7 +85,7 @@ y listo , esta todo instalado y podemos configurar nuestro sitio .
 !(./capturas/ya_instalado.png)
 
 para cambiar de tema 	:
- descarga un tema y descomprimelo  en ~~~ /var/wwe/sites/all/themes ~~~ y activalo luego en el apartado apariencia de la pagina .
+ descarga un tema y descomprimelo  en  /var/wwe/sites/all/themes  y activalo luego en el apartado apariencia de la pagina .
 !(./capturas/he_cambiado_tema.png)
 
 para instalar alguna funcionalidad con modulos se hace lo mismo , pero en la carpeta modulos .
