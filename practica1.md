@@ -2,8 +2,26 @@
 layout: default
 ---
 
-# Hola!
+## Esta practica consta de las siguientes tareas :
 
-_Me llamo misael y estudio sistemas en el IES Gonzalo Nazareno_
+[1. Pila LAMP][tarea1]
 
-[atras](./)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[tarea1] esto es una prueba de enlace internos 
