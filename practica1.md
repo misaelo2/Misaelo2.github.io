@@ -46,7 +46,6 @@ Esto ya es mas complicado , se trata de , mediante un gestor de contenido web , 
  - lo movemos a nuestro sitios de apache ( /var/www/ )
 ~~~
 	mv drupal-7.0  /var/www/
-
 ~~~
 
  - creamos usuario para la base de datos :
