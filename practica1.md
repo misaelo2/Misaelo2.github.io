@@ -81,16 +81,16 @@ Si todo va bien , ahora procederemos a configurar nuestro site
 
 
 y listo , esta todo instalado y podemos configurar nuestro sitio .
-!(capturas/ya_instalado.png)
+![instalado](capturas/ya_instalado.png)
 
 para cambiar de tema 	:
  descarga un tema y descomprimelo  en  /var/wwe/sites/all/themes  y activalo luego en el apartado apariencia de la pagina .
-!(capturas/he_cambiado_tema.png)
+![tema](capturas/he_cambiado_tema.png)
 
 para instalar alguna funcionalidad con modulos se hace lo mismo , pero en la carpeta modulos .
-!(capturas/activar_modulos.png)
+![modulo](capturas/activar_modulos.png)
 
 Por ejemplo , yo me descargue un modulo para tener un foro : 
- !(capturas/modulo_foro.png)
+ ![foro](capturas/modulo_foro.png)
 
 
