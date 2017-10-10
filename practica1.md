@@ -6,7 +6,7 @@ layout: default
 
 1. [Instalacion pila LAMP](#tarea1) 
 2. [Instalacion y configuracion de un CMS](#tarea2) 
-
+3. [Configuracion Multinodo](#tarea3)
 
 
 ## Tarea1 
@@ -94,3 +94,84 @@ Por ejemplo , yo me descargue un modulo para tener un foro :
  ![foro](capturas/modulo_foro.png)
 
 
+## Tarea3
+Ahora , haremos que nuestro gestor de contenido utilize una base de datos dispuesta en otra maquina .
+
+Estas son las tablas a copiar  : 
+
+![Base_Datos](capturas/BD.png)
+
+
+-Primero creamos una copia de seguridad de la base de datos.
+
+mysqldump --user=TU_USUARIO --password=TU_CONTRASEÑA NOMBRE_BASE_DE_DATOS > copia_seguridad.sql
+	
+	
+	si no te deja , concedele los permiso al usuario.
+
+-creamos el escenario vagrant , conectado a la maquina que teniamos nuestro servicio CMS anterior ,y le instalamos una base de datos . 
+
+-creamos una base de datos 
+	
+	create database copia_drupal ;
+	
+-nos pasamos el fichero a la otra maquina (podemos usar el plugin scp , hacerlo por scp cojiendo la clave de vagrant , o mas facil , introduciendo el fichero sql que hemos creado , en el directorio donde esta el vagrantfile) .
+
+	cp /home/misael/Documentos/copia_seguridad.sql 	~/vagrant/Practicaiaw1 
+
+
+
+-utilizamos  el script  de la base de datos
+
+	mysql --user=root --password=root  copia_drupal  < copia_seguridad.sql
+
+-creamos un usuario en la base de datos con privilegio a esa base de datos : 
+		
+	GRANT ALL PRIVILEGES ON copia_drupal.* TO 'misael'@'%'
+	IDENTIFIED BY 'misael' WITH GRANT OPTION;
+
+-Ahora nos conectamos con el usuario y observamos las tablas :
+
+![Base_Datos](capturas/copiaBD.png)
+magia ! las mismas tablas que antes .
+
+
+-Desactivamos el servidor de base de datos en el servidor anterior 
+	systemctl stop mysql 
+
+
+-Ahora indicamos a nuestro CMS que coja la Base de datos en la otra maquina virtual : 
+
+Nota : a estas alturas , no deberiamos poder acceder a nuestra pagina :
+![Base_Datos](capturas/error_BD.png)
+
+
+-editamos el settings.php 
+
+	ponemos las caracteristicas de nuestro servidor remoto 
+
+~~~
+
+  @code
+  array(
+    'driver' => 'mysql',
+    'database' => 'databasename',
+    'username' => 'username',
+    'password' => 'password',
+    'host' => 'localhost',
+    'port' => 3306,
+    'prefix' => 'myprefix_',
+    'collation' => 'utf8_general_ci',
+  );
+  @endcode
+
+~~~
+
+
+-Ahora vamos al servidor remoto y permitimos las conexiones  
+~~~
+	bind-address            = 0.0.0.0
+~~~
+Listo , refrescamos nuestro drupal : 
+
+![exito](capturas/exito.png)
