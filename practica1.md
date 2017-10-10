@@ -4,8 +4,8 @@ layout: default
 
 ## Esta practica consta de las siguientes tareas :
 
-1. [Instalacion pila LAMP](##tarea1) 
-2. [Instalacion y configuracion de un CMS](##tarea2) 
+1. [Instalacion pila LAMP](#tarea1) 
+2. [Instalacion y configuracion de un CMS](#tarea2) 
 
 
 
