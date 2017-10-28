@@ -9,4 +9,6 @@ En este Blog subire contenido de mis Practicas para que lo podais disfrutar todo
 
 [Saber mas sobre mi](https://misaelo2.github.io./about)
 
-[Practica1 : Instalacion y configuracion CMS y pila LAMP](https://misaelo2.github.io./practica1) 
+[Practica1 : Instalacion y configuracion CMS y pila LAMP](https://misaelo2.github.io./practica1)
+
+[Practica2 : Istalacion y configuracion CMS en hosting externo](https://misaelo2.github.io./Practica2)
