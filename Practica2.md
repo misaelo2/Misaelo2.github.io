@@ -73,10 +73,10 @@ Ya tenemos nuestro cms php creado .
 
 ![listo_cdmon](capturas/listo_cdmon.png)
 
-Si queremos añadir alguna funcionalidad mas a nuestra pagina , debemos subir un modulo o tema a nuestro hosting a traves de ftp y activarlo como lo hicimos la anterior vez en [Practica 1](./Practica1.md).
+Si queremos añadir alguna funcionalidad mas a nuestra pagina , debemos subir un modulo o tema a nuestro hosting a traves de ftp y activarlo como lo hicimos la anterior vez en [Practica 1](./practica1.md).
 
 
-## Tarea 5 
+## Tarea5 
 
 
 - Para hacer una copia de seguridad de nuestra aplicacion , la mayoria de hostings te da opcion a gestionarlas, por ejemplo , en cdmon :
