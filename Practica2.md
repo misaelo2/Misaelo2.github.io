@@ -33,7 +33,7 @@ Como opcion a instalar he decidido instalar Wordpress en virtual hosting
 
 ya tenemos y podemos perfeccionar nuestro sitio web .
 
-## Tarea3
+## Tarea4
 
 -Ahora , Debemos migrar nuestro servidor dedicado a una pagina de hosting externa :
 
@@ -47,36 +47,47 @@ ya tenemos y podemos perfeccionar nuestro sitio web .
 	nos logueamos
 ~~~
 
+-nos situamos en la carpeta de instalacion y Comprimimos los documentos de nuestro CMS instalado :
+
+~~~
+ zip -r wordpress.zip wordpress/
+~~~ 
+
 -Una vez dentro pasamos los archivos al servidor , con el comando "put" ( yo he enviado el archivo comprimido para luego descomprimirlo desde el cpanel de CDMON )
 
 ~~~
-	ftp> put latest.zip wordpress.zip
+	ftp> put wordpress.zip migracion.zip
 ~~~
 	
 al completar el envio , estara en nuestro dominio 
 
 ![ftp](capturas/ftp.png)
 
+tambien creamos una copia de la base de datos de nuestro servidor local y la enviamos a el hosting 
+~~~
+mysqldump --user=debian --password="contraseña" "Base de datos"  > migracion.sql
+~~~
+
+Ejecutamos el script en el hosting :
+
+![migracion_bd](capturas/migrar_bd.png)
+
+IMPORTANTE : al descomprimir , tenemos que entrar en nuestra carpeta de wordpress , y editar el wp-config.php para que apunte a la base de datos y el usuario mysql que tendremos en nuestro hosting . un ejemplo : 
+
+![config_bd](capturas/config_bd.png)
+
 ahora , me he ido al gestor de archivos de mi hosting y he descomprimido el archivo comprimido de wordpress en la carpeta /web
 
 ![descompresion](capturas/descompresion.png)
 
-una vez descomprimidos , nos vamos a la url para instalar wordpress como si de nuestro virtualhosting se tratara en nuestra maquina fisica :
+una vez descomprimidos , nos vamos a la url  como si de nuestro virtualhosting se tratara en nuestra maquina fisica :
 
-![instalacion_cdmon](capturas/instalacion_cdmon.png)
+![wordpress_funcionando](capturas/wordpress_funcionando.png)
 
-Los pasos serian los mismos , solo que esta vez , para la base de datos , tendremos que gestionarlo a traves de nuestro hosting :
-
-![BD_cdmon](capturas/BD_cdmon.png)
-
-Ya tenemos nuestro cms php creado .
-
-![listo_cdmon](capturas/listo_cdmon.png)
-
-Si queremos añadir alguna funcionalidad mas a nuestra pagina , debemos subir un modulo o tema a nuestro hosting a traves de ftp y activarlo como lo hicimos la anterior vez en [Practica 1](./practica1.md).
+Si queremos añadir alguna funcionalidad mas a nuestra pagina , debemos subir un modulo o tema a nuestro hosting a traves de ftp y activarlo como lo hicimos la anterior vez en [Practica 1](./Practica1.md).
 
 
-## Tarea5 
+## Tarea 5 
 
 
 - Para hacer una copia de seguridad de nuestra aplicacion , la mayoria de hostings te da opcion a gestionarlas, por ejemplo , en cdmon :
