@@ -4,7 +4,7 @@ Despliege Tradicional de un CMS PHP :
 
 1. [eleccion opcion](#tarea1)
 2. [InstalacionCMS](#tarea2)
-3. [instalacion en hosting](#tarea3)
+3. [Migracion](#tarea4)
 4. [copias de seguridad](#tarea5)
 ## Tarea1
 
