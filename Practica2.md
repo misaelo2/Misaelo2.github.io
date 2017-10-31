@@ -87,7 +87,7 @@ una vez descomprimidos , nos vamos a la url  como si de nuestro virtualhosting s
 Si queremos añadir alguna funcionalidad mas a nuestra pagina , debemos subir un modulo o tema a nuestro hosting a traves de ftp y activarlo como lo hicimos la anterior vez en [Practica 1](./Practica1.md).
 
 
-## Tarea 5 
+## Tarea5 
 
 Para hacer copias de seguridad de mi aplicacion , lo que haria seria establecer la aplicacion que tengo en local como plataforma de desarrollo , y una vez que quiero implantarla en produccion , seria migrarla otra vez como hemos hecho en los primeros pasos ,esto daria lugar a tener que comprimir otra vez los archivos en la carpeta de instalacion y hacer una copia de la base de datos cada vez que queramos implantar una nueva version . 
 
