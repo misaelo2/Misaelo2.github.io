@@ -89,19 +89,25 @@ Si queremos añadir alguna funcionalidad mas a nuestra pagina , debemos subir un
 
 ## Tarea 5 
 
+Para hacer copias de seguridad de mi aplicacion , lo que haria seria establecer la aplicacion que tengo en local como plataforma de desarrollo , y una vez que quiero implantarla en produccion , seria migrarla otra vez como hemos hecho en los primeros pasos ,esto daria lugar a tener que comprimir otra vez los archivos en la carpeta de instalacion y hacer una copia de la base de datos cada vez que queramos implantar una nueva version . 
 
-- Para hacer una copia de seguridad de nuestra aplicacion , la mayoria de hostings te da opcion a gestionarlas, por ejemplo , en cdmon :
+Para ahorrarnos trabajo , lo podriamos programar mediante el archivo de tareas programadas llamada "crontab" 
 
-![seguridad](capturas/copia_seguridad.png)
+-Abrimos el fichero /etc/crontab y escribimos lo siguiente :
 
- 
+~~~
+00	12	*	*	7	zip /home/debian/apli_web/copia_web.zip    /var/www/wordpress
+00	12	*	*	7	sqldump --user=debian --password=debian wordpress /home/debian/apli_web/copia_web.sql
+~~~
 
-- Podemos automatizar estos procesos mediante plugins y aplicaciones , por ejemplo , en wordpress hay un plugin llamado BackWPup , que permite realizar copias de seguridad automaticas y enlazarla a una cuenta de dropbox configurada previamente , aqui os dejo un enlace :
+con este comando , establecemos que queremos que se comprima el archivo /var/www/wordpress en la carpeta /home/debian/apli_web/copia_web.zip 
+los domingos de todas las semanas de todos los meses a las 12:00 horas 
 
-[copia](https://youtu.be/FKwRBLpSNhE)
+Nota : para usar este metodo tienes que tener en cuenta que el usuario y la base de datos tienen que estar bien configurados en el wp-settings.php
+o puedes crear en tu hosting las mismas caracteristicas que la base de datos de tu local.
 
 
-
+Aun asi , sigue resultando algo tedioso tener que ir subiendo los ficheros por ftp y descomprimirlos asi que podemos hacer uso de plugins de wordpress como "Backup WordPress" o "xcloner" . 
 
 
 
