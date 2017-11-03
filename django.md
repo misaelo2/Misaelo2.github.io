@@ -57,16 +57,17 @@ nos metemos en la pagina :
 ~~~
 introducimos los datos del superusuario y nos lleva a la siguiente pagina 
 
-![admin](capturas/django_admin)
+![admin](capturas/django_admin.png)(https://misaelo2.github.io./Practica2)
+
 
 
 añadimos encuestas 
 
-![encuesta](capturas/django_encuesta)
+![encuesta](capturas/django_encuesta.png)
 
 listo , nuestras encuestas ya apareceran en la raiz 
 
-![encuesta](capturas/django_vota)
+![encuesta2](capturas/django_vota.png)
 
 
 ## Tarea2
