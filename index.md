@@ -13,5 +13,5 @@ En este Blog subire contenido de mis Practicas para que lo podais disfrutar todo
 
 [Practica2 : Istalacion y configuracion CMS en hosting externo](https://misaelo2.github.io./Practica2)
 
-[Practica3 : Introduccion a despliege y desarrollo de aplicaciones web en django](https://misaelo2.github.io./django.md)
+[Practica3 : Introduccion a despliege y desarrollo de aplicaciones web en django](https://misaelo2.github.io./django)
 
