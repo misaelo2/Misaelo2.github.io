@@ -57,6 +57,8 @@ python manage.py migrate
 
 -Poblamos nuestra Base de datos :
 ~~~
-python manage.py dumpdata > datos.jason 
+python manage.py loaddata > datos.jason 
 ~~~
 -Ahora observamos que los datos se han añadido correctamente entrando en la zona de administracion 
+
+![poblar](capturas/admin_insercion.png)
