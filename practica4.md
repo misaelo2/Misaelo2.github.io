@@ -47,3 +47,16 @@ DATABASES = {
 ~~~
 
 -Nuestra base de datos se llamara SuperDB
+
+-Creamos la base de datos :
+~~~
+python manage.py migrate 
+~~~
+
+![crearbd](capturas/migrate_pr4.png)
+
+-Poblamos nuestra Base de datos :
+~~~
+python manage.py dumpdata > datos.jason 
+~~~
+-Ahora observamos que los datos se han añadido correctamente entrando en la zona de administracion 
