@@ -89,3 +89,27 @@ git push
 -Mostramos el fichero cambiado en el repositorio :
 
 ![subirepo](capturas/Captura de pantalla de 2017-11-10 09-17-10.png)
+
+
+## Tarea3
+
+-Ahora vamos a subir nuestra aplicacion a un entorno de produccion :
+
+-Nos conectamos a la maquina e instalamos los servicios necesarios 
+
+-Clonamos el repositorio en el Documentroot de la pagina que serviremos 
+
+-Creamos un entorno virtual y instalamos las dependencias necesarios como hicimos en el entorno de produccion 
+~~~
+pip install -r requirements.txt
+~~~
+-Instalamos el modulo que permite que python trabaje con mysql :
+~~~
+apt-get install python-mysqldb
+~~~
+-y en el entorno virtual tambien 
+~~~
+pip install libmariadbclient-dev (para debian 9 stretch)
+pip install mysql-python
+~~~
+-Ah
