@@ -59,6 +59,33 @@ python manage.py migrate
 ~~~
 python manage.py loaddata > datos.jason 
 ~~~
--Ahora observamos que los datos se han añadido correctamente entrando en la zona de administracion 
+-Ahora observamos que los datos se han añadido correctamente entrando en la zona de administracion "/admin"
 
 ![poblar](capturas/admin_insercion.png)
+
+-Ahora ejecutamos el script manage.py para correr un servidor web de desarrollo :
+~~~
+python manage.py runserver
+~~~
+
+-Introducimos las credenciales "usuario" y "asdasd1234" y conectamos para comprobar que funciona :
+
+![login](capturas/Captura de pantalla de 2017-11-10 08-43-02.png)
+
+
+## Tarea2
+
+Ahora comenzaremos a desarrollar nuestra aplicacion aplicando cambios y comprobando que se realizan adecuadamente .
+
+-Realizamos cualquier cambio en la aplicacion , como por ejemplo , que se cambie nuestro nombre .
+
+![cambios](capturas/Captura de pantalla de 2017-11-10 09-11-20.png)
+
+-Subimos los cambios al repositorio :
+~~~
+git commit -am 'modificando cambios'
+git push
+~~~
+-Mostramos el fichero cambiado en el repositorio :
+
+![subirepo](capturas/Captura de pantalla de 2017-11-10 09-17-10.png)
