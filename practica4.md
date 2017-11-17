@@ -57,7 +57,7 @@ python manage.py migrate
 
 -Poblamos nuestra Base de datos :
 ~~~
-python manage.py loaddata > datos.jason 
+python manage.py loaddata  datos.jason 
 ~~~
 -Ahora observamos que los datos se han añadido correctamente entrando en la zona de administracion "/admin"
 
@@ -106,10 +106,54 @@ pip install -r requirements.txt
 -Instalamos el modulo que permite que python trabaje con mysql :
 ~~~
 apt-get install python-mysqldb
+apt-get install libapache2-mod-wsgi
 ~~~
 -y en el entorno virtual tambien 
 ~~~
 pip install libmariadbclient-dev (para debian 9 stretch)
 pip install mysql-python
 ~~~
--Ah
+
+-Ahora Creamos un fichero de virtualhost en los que definiremos el nombre de la pagina y la ruta del documentRoot y del wsgi.py para que corra nuestra aplicacion :
+~~~
+ServerName www.iaw-gestiona.com
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/iaw_gestionGN
+        
+        WSGIDaemonProcess www.iaw-gestiona.com python-path=/var/www/iaw_gestionGN:/home/debian/venv/iaw_gestiona/lib/python2.7/site-packages 
+        WSGIProcessGroup www.iaw-gestiona.com
+        WSGIScriptAlias / /var/www/iaw_gestionGN/gestion/wsgi.py
+
+        
+        <Directory /var/www/iaw_gestionGN/gestion>
+                <Files wsgi.py>
+                Require all granted
+                </Files>
+        </Directory>
+~~~
+
+-Creamos una base de datos y un usuario en mysql
+
+-Ahora , en la aplicacion modificamos el archivo "settings.py" y definimos la base de datos a utilizar :
+
+
+DATABASES = {
+              'default': {
+                            'ENGINE': 'django.db.backends.mysql',
+                                      'NAME': 'iaw_gestion',
+                                                'USER': 'gestiona',
+                                                          'PASSWORD': 'gestiona',
+                                                                    'HOST': 'localhost',
+                                                                              'PORT': '',
+                                                                                    }
+                }
+
+-Es hora de crear la base de datos  y cargar los datos de prueba :
+~~~
+python manage.py migrate
+python manage.py loaddata  datos.json
+~~~
+
+![produccion_bd](capturas/Captura de pantalla de 2017-11-17 10-49-01.png)
+
