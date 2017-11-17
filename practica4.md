@@ -136,7 +136,7 @@ ServerName www.iaw-gestiona.com
 -Creamos una base de datos y un usuario en mysql
 
 -Ahora , en la aplicacion modificamos el archivo "settings.py" y definimos la base de datos a utilizar :
-
+~~~
 
 DATABASES = {
               'default': {
@@ -148,12 +148,12 @@ DATABASES = {
                                                                               'PORT': '',
                                                                                     }
                 }
-
+~~~
 -Es hora de crear la base de datos  y cargar los datos de prueba :
 ~~~
 python manage.py migrate
 python manage.py loaddata  datos.json
 ~~~
-
+-Si accedemos a Mysql podemos observar los datos creados .
 ![produccion_bd](capturas/Captura de pantalla de 2017-11-17 10-49-01.png)
 
