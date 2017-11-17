@@ -4,8 +4,8 @@ Entorno de Desarrollo y produccion con aplicacion web python con Django
 
 1. [Entorno de desarrollo](#tarea1)
 2. [Desarrollo de nuestra aplicacion](#tarea2)
-3. [Entorno de produccion](#tarea4)
-4. [Modificacion en entorno de produccion](#tarea5)
+3. [Entorno de produccion](#tarea3)
+4. [Modificacion en entorno de produccion](#tarea4)
 5. [Despliege en un hosting python](#tarea5)
 
 
