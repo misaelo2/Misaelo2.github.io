@@ -157,3 +157,26 @@ python manage.py loaddata  datos.json
 -Si accedemos a Mysql podemos observar los datos creados .
 ![produccion_bd](capturas/Captura de pantalla de 2017-11-17 10-49-01.png)
 
+-Recordad acceder a nuestro Settings.py y poner el debug a False y insertar la pagina que puede usar nuestra aplicacion en allowed_hosts
+
+![static](Captura de pantalla de 2017-11-24 08-44-43.png) 
+
+## Tarea4
+
+-Ahora realizaremos una modificacion en el entorno de desarrollo y la subiremos al entorno de produccion
+
+-En el entorno de desarrollo , hacemos que muestre otra imagen en la ventana principal , modificando el index.html
+
+![imagen](Captura de pantalla de 2017-11-24 09-01-16.png)
+
+-Añadimos un archivo .gitignore al repositorio y escribimos "settings.py" para que no suba el settings.py y no modifique la del entorno de produccion 
+
+-Hacemos commit y subimos los cambios al repositorio 
+
+-Ahora hacemos un pull en el entorno de produccion y nos apareceran los cambios 
+
+![gato](Captura de pantalla de 2017-11-24 09-27-16.png)
+
+
+-Cada cambio que realizemos en produccion , asi prodemos con un simple pull en produccion , crear la nueva version , por ejemplo podemos 
+añadir una nueva tabla modificando centro/models.py
