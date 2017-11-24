@@ -159,7 +159,7 @@ python manage.py loaddata  datos.json
 
 -Recordad acceder a nuestro Settings.py y poner el debug a False y insertar la pagina que puede usar nuestra aplicacion en allowed_hosts
 
-![static](Captura de pantalla de 2017-11-24 08-44-43.png) 
+![static](capturas/Captura de pantalla de 2017-11-24 08-44-43.png) 
 
 ## Tarea4
 
@@ -167,7 +167,7 @@ python manage.py loaddata  datos.json
 
 -En el entorno de desarrollo , hacemos que muestre otra imagen en la ventana principal , modificando el index.html
 
-![imagen](Captura de pantalla de 2017-11-24 09-01-16.png)
+![imagen](capturas/Captura de pantalla de 2017-11-24 09-01-16.png)
 
 -Añadimos un archivo .gitignore al repositorio y escribimos "settings.py" para que no suba el settings.py y no modifique la del entorno de produccion 
 
@@ -175,7 +175,7 @@ python manage.py loaddata  datos.json
 
 -Ahora hacemos un pull en el entorno de produccion y nos apareceran los cambios 
 
-![gato](Captura de pantalla de 2017-11-24 09-27-16.png)
+![gato](capturas/Captura de pantalla de 2017-11-24 09-27-16.png)
 
 
 -Cada cambio que realizemos en produccion , asi prodemos con un simple pull en produccion , crear la nueva version , por ejemplo podemos 
