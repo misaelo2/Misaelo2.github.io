@@ -251,7 +251,7 @@ Ahora borramos todo excepto la seccion "Django" y la descomentamos , quedaria un
   application = django.core.handlers.wsgi.WSGIHandler()
 ~~~
 
- * Ahora cojemos el ficheor wsgi de nuestro proyecto y lo pegamos aqui  y modificamos para que quede parecido a esto :
+-Ahora cojemos el ficherowsgi de nuestro proyecto y lo pegamos aqui  y modificamos para que quede parecido a esto :
 
 ~~~
  import sys
