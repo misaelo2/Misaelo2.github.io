@@ -180,3 +180,137 @@ python manage.py loaddata  datos.json
 
 -Cada cambio que realizemos en produccion , asi prodemos con un simple pull en produccion , crear la nueva version , por ejemplo podemos 
 añadir una nueva tabla modificando centro/models.py
+
+
+## Tarea5
+
+-Ahora subiremos  nuestra aplicacion hecha en django a un hosting de python llamado PythonAnywhere
+
+-Nos creamos una cuenta y a traves del navegador ejecutamos una terminal y seguimos los pasos descritos en la documentacion 
+
+1 subimos nuestro codigo , en mi caso , mediante Github
+~~~
+git clone repositorio
+~~~
+2 creamos un entorno virtual e instalamos las dependencias requeridas en nuestro "requirements.txt" 
+~~~ 
+mkvirtualenv --python=/usr/bin/python3.4 mysite-virtualenv
+~~~
+  *Nota : al instalar django , es normal que tarde un poquitin* .
+	
+3 Ahora tenemos que tener en cuenta tres cosas :
+	-La ruta de la aplicacion de django (la carpeta mas alta,donde esta "manage.py")
+	-La ruta del proyecto (el directorio que contiene el fichero "settings.py")
+	-El nombre de nuestro entorno virtual 
+
+	 
+una vez nos hacemos con esas tres rutas 
+
+creamos una web app con configuracion manual en el panel web
+
+![creando_app](Captura de pantalla de 2017-11-28 08-34-25.png)
+
+Seleccionamos la version de python que vamos a utilizar , (la que creamos en el virtualenv)
+
+Una vez creada la aplicacion , buscamos en la aplicacion e introducimos la ruta de nuestro entorno virtual en mi caso es :
+~~~
+/home/misaelo/.virtualenvs/venv-gestiona
+~~~
+Tal que asi
+![path](Captura de pantalla de 2017-11-28 08-43-16.png)
+
+Ahora hay que editar nuestro fichero WSGI.py , pero no el de nuestro proyecot django , ya que el sistema de pythonanywhere ignorara este fichero y creara uno
+en la ruta donde nuestro codigo esta , para averiguarla , en el panel grafico nos vamos a las pestañas web y miramos la seccion "code"
+
+![wsgi](Captura de pantalla de 2017-11-28 08-47-40.png)
+
+Como vemos la ruta de mi wsgi.py esta en "/var/www/misaelo_pythonanywhere_com_wsgi.py"
+
+Editamos ese fichero y borramos la aplicacion "hello world " de prueba que estaran en las primeras lineas
+
+Ahora borramos todo excepto la seccion "Django" y la descomentamos , quedaria una cosa asi
+~~~
+# +++++++++++ DJANGO +++++++++++
+ 47 # To use your own django app use code like this:
+ 48 import os
+ 49 import sys                                                                                                                                       
+ 50
+ 51 # assuming your django settings file is at '/home/misaelo/mysite/mysite/settings.py'
+ 52 # and your manage.py is is at '/home/misaelo/mysite/manage.py'
+ 53 path = '/home/misaelo/mysite'
+ 54 if path not in sys.path:
+ 55     sys.path.append(path)
+ 56
+ 57 os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.settings'
+ 58
+ 59 # then, for django >=1.5:
+ 60 from django.core.wsgi import get_wsgi_application
+ 61 application = get_wsgi_application()
+ 62 # or, for older django <=1.4
+ 63 import django.core.handlers.wsgi
+ 64 application = django.core.handlers.wsgi.WSGIHandler()
+~~~
+
+ * Ahora cojemos el ficheor wsgi de nuestro proyecto y lo pegamos aqui  y modificamos para que quede parecido a esto :
+~~~
+ # +++++++++++ DJANGO +++++++++++
+ import sys
+ import os
+ path = '/home/misaelo/iaw_gestionGN'
+ if path not in sys.path:
+     sys.path.append(path)                             
+ from django.core.wsgi import get_wsgi_application
+
+ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gestion.settings")
+
+
+ application = get_wsgi_application()
+~~~
+
+Guardamos el fichero y recargamos la aplicacion 
+![reload](Captura de pantalla de 2017-11-28 09-12-28.png)
+
+Ahora creamos una base de datos , (mysql en mi caso) . Python anywhere te facilita esta tarea teniendo que introducir solo contraseña.
+
+Ingresamos a la consola de nuestra base de datos una vez , salimos y nos aseguramos de que nuestro fichero settings.py tiene configurado una base de datos mysql.
+~~~
+  DATABASES = {
+      'default': {
+          'ENGINE': 'django.db.backends.mysql',
+          'NAME': '', (base de datos creada por defecto )
+          'USER': '', (nombre de usuario creado)
+          'PASSWORD': '',(contraseña asignada)
+          'HOST': '', (nombre de host que da pythonanywhere)
+          'PORT': '',
+      }
+  }
+~~~
+Ahora migramos la base de datos 
+
+~~~
+python manage.py migrate
+~~~
+
+Si todo va bien nos saldra algo como esto :
+
+![migrate](Captura de pantalla de 2017-11-28 09-38-58.png)
+
+*No olvidemos poner a False el debug para que no nos muestre informacion sensible a la aplicacion* .
+
+Ahora , por ultimo , nos encargamos de los ficheros estaticos.
+
+En pythonAnywhere podemos servir los ficheros estaticos de tres formas doferentes 
+
+1-Modificando el "static_root" in settings.py 
+
+2-Ejecutando ~~~ manage.py collecstatic ~~~ 
+
+3-En la interfaz web de pythonanywhere , establecer la ruta de tus ficheros estaticos (he elegido esta ya que va mucho mas rapido al no cargarlas desde el disco de la maquina)
+
+	Para eso , nos vamos a nuestra app , y en la seccion de static files escribimos lo siguiente :
+
+![static](Captura de pantalla de 2017-11-28 09-56-29.png) 
+
+Listo , Como podemos observar , en unos sencillos pasos tendremos nuestra app funcionando 
+
+![app_serve](Captura de pantalla de 2017-11-28 09-57-34.png).
