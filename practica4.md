@@ -208,7 +208,7 @@ una vez nos hacemos con esas tres rutas
 
 creamos una web app con configuracion manual en el panel web
 
-![creando_app](Captura de pantalla de 2017-11-28 08-34-25.png)
+![creando_app](capturas/Captura de pantalla de 2017-11-28 08-34-25.png)
 
 Seleccionamos la version de python que vamos a utilizar , (la que creamos en el virtualenv)
 
@@ -217,12 +217,12 @@ Una vez creada la aplicacion , buscamos en la aplicacion e introducimos la ruta 
 /home/misaelo/.virtualenvs/venv-gestiona
 ~~~
 Tal que asi
-![path](Captura de pantalla de 2017-11-28 08-43-16.png)
+![path](capturas/Captura de pantalla de 2017-11-28 08-43-16.png)
 
 Ahora hay que editar nuestro fichero WSGI.py , pero no el de nuestro proyecot django , ya que el sistema de pythonanywhere ignorara este fichero y creara uno
 en la ruta donde nuestro codigo esta , para averiguarla , en el panel grafico nos vamos a las pestañas web y miramos la seccion "code"
 
-![wsgi](Captura de pantalla de 2017-11-28 08-47-40.png)
+![wsgi](capturas/Captura de pantalla de 2017-11-28 08-47-40.png)
 
 Como vemos la ruta de mi wsgi.py esta en "/var/www/misaelo_pythonanywhere_com_wsgi.py"
 
@@ -268,7 +268,7 @@ Ahora borramos todo excepto la seccion "Django" y la descomentamos , quedaria un
 ~~~
 
 Guardamos el fichero y recargamos la aplicacion 
-![reload](Captura de pantalla de 2017-11-28 09-12-28.png)
+![reload](capturas/Captura de pantalla de 2017-11-28 09-12-28.png)
 
 Ahora creamos una base de datos , (mysql en mi caso) . Python anywhere te facilita esta tarea teniendo que introducir solo contraseña.
 
@@ -293,7 +293,7 @@ python manage.py migrate
 
 Si todo va bien nos saldra algo como esto :
 
-![migrate](Captura de pantalla de 2017-11-28 09-38-58.png)
+![migrate](capturas/Captura de pantalla de 2017-11-28 09-38-58.png)
 
 *No olvidemos poner a False el debug para que no nos muestre informacion sensible a la aplicacion* .
 
@@ -309,8 +309,8 @@ En pythonAnywhere podemos servir los ficheros estaticos de tres formas doferente
 
 	Para eso , nos vamos a nuestra app , y en la seccion de static files escribimos lo siguiente :
 
-![static](Captura de pantalla de 2017-11-28 09-56-29.png) 
+![static](capturas/Captura de pantalla de 2017-11-28 09-56-29.png) 
 
 Listo , Como podemos observar , en unos sencillos pasos tendremos nuestra app funcionando 
 
-![app_serve](Captura de pantalla de 2017-11-28 09-57-34.png).
+![app_serve](capturas/Captura de pantalla de 2017-11-28 09-57-34.png).
