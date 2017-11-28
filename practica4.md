@@ -231,29 +231,29 @@ Editamos ese fichero y borramos la aplicacion "hello world " de prueba que estar
 Ahora borramos todo excepto la seccion "Django" y la descomentamos , quedaria una cosa asi
 ~~~
 # +++++++++++ DJANGO +++++++++++
- 47 # To use your own django app use code like this:
- 48 import os
- 49 import sys                                                                                                                                       
- 50
- 51 # assuming your django settings file is at '/home/misaelo/mysite/mysite/settings.py'
- 52 # and your manage.py is is at '/home/misaelo/mysite/manage.py'
- 53 path = '/home/misaelo/mysite'
- 54 if path not in sys.path:
- 55     sys.path.append(path)
- 56
- 57 os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.settings'
- 58
- 59 # then, for django >=1.5:
- 60 from django.core.wsgi import get_wsgi_application
- 61 application = get_wsgi_application()
- 62 # or, for older django <=1.4
- 63 import django.core.handlers.wsgi
- 64 application = django.core.handlers.wsgi.WSGIHandler()
+  # To use your own django app use code like this:
+  import os
+  import sys                                                                                                                                       
+ 
+  # assuming your django settings file is at '/home/misaelo/mysite/mysite/settings.py'
+  # and your manage.py is is at '/home/misaelo/mysite/manage.py'
+  path = '/home/misaelo/mysite'
+  if path not in sys.path:
+      sys.path.append(path)
+ 
+  os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.settings'
+ 
+  # then, for django >=1.5:
+  from django.core.wsgi import get_wsgi_application
+  application = get_wsgi_application()
+  # or, for older django <=1.4
+  import django.core.handlers.wsgi
+  application = django.core.handlers.wsgi.WSGIHandler()
 ~~~
 
  * Ahora cojemos el ficheor wsgi de nuestro proyecto y lo pegamos aqui  y modificamos para que quede parecido a esto :
+
 ~~~
- # +++++++++++ DJANGO +++++++++++
  import sys
  import os
  path = '/home/misaelo/iaw_gestionGN'
