@@ -17,3 +17,5 @@ En este Blog subire contenido de mis Practicas para que lo podais disfrutar todo
 
 [Practica4 : Desarrollo y produccion de aplicaciones web en python con django](https://misaelo2.github.io./practica4)
 
+[Practica5 : Instalacion CMS Mezzanime](https://misaelo2.github.io./practica5)
+
