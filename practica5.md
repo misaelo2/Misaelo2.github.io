@@ -1,7 +1,7 @@
 Esta practica consta de las siguientes tareas :
 
-1. [Instalacion de Mezzanime](#Tarea1)
-2. [Migracion a entorno de produccion](#Tarea2)
+1. [Instalacion de Mezzanime](#tarea1)
+2. [Migracion a entorno de produccion](#tarea2)
 
 
 ## Tarea1
