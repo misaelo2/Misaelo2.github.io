@@ -88,6 +88,7 @@ ServerName www.mezzanine.com
         WSGIProcessGroup www.mezzanine.com
         WSGIScriptAlias / /var/www/superproyecto/superproyecto/wsgi.py
 
+	Alias /static/ /var/www/superproyecto/static/
         
         <Directory /var/www/superproyecto/superproyecto>
                 <Files wsgi.py>
