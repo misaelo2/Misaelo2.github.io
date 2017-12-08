@@ -101,4 +101,88 @@ y en nuestro correo nos avisa :
 ![error_correo](capturas/Captura de pantalla de 2017-12-07 18-26-51.png)
 
 
+# Tarea3
 
+Ahora vamos a construir un sitio web con la aplicacion python llamada pelican y desplegarlo en Github Pages :
+
+-Creamos un repositorio nuevo con un fichero Readme.md  con una rama secundaria llamada "gh-pages" 
+
+
+
+Ahora creamos un entorno virtual e instalamos pelican :
+~~~
+python3 -m venv pelican
+pip install pelican==3.7.1 markdown==2.6.8
+~~~
+
+Nos movemos a un directorio donde queramos guardar nuestro contenido y ejecutamos lo siguiente 
+~~~
+pelican-quickstart
+~~~
+
+Nos hara una serie de preguntas , las contestamos correctamente 
+
+-En nuestra prefijo url ponemos algo como "https://misaelo2.github.io/{nombre_repo}"
+
+-Decimos que queremos que suba nuestros Ficheros por github Pages 
+
+
+Ejecutamos el servidor web de desarrollo 
+~~~
+make devserver
+~~~
+
+Ahora si accedemos a "localhost:8000" 
+
+![pelican](capturas/Captura de pantalla de 2017-12-08 18-30-54.png)
+
+Ahora , este proceso de "build" lo queremos realizar automaticamente con travis 
+
+-Activamos nuestro repositorio en el dashboard de travis 
+
+-Creamos un fichero .travis.yml con el siguiente contenido :
+~~~
+language: python
+branches:
+  only:
+  - master
+install:
+- pip install pelican ghp-import
+script:
+- make publish github
+~~~
+
+Ahora , creamos un token en nuestra pagina de github para acceder a la API y instalamos lo siguiente para
+encriptarlo 
+
+~~~
+sudo apt-get install ruby1.9.1-dev build-essential
+sudo apt install gem 
+sudo gem install travis
+travis encrypt GH_TOKEN=your_token
+~~~
+
+Esto nos dara un token encriptado , añadimos a nuestro fichero .travis.yml lo siguiente :
+~~~
+env:
+  global:
+    secure: your_encrypt_token
+~~~
+
+-Ahora , en nuestro directorio de proyecto modificamos el fichero Makefile 
+
+~~~
+github: publish
+
+  ghp-import -n $(OUTPUTDIR)
+  @git push -fq https://${GH_TOKEN}@github.com/$(TRAVIS_REPO_SLUG).git gh-pages > /dev/null
+~~~
+-Sustituimos "travis Repo Slug por nuestro repositorio " y añadimos en nuestro fichero de configuracion de pelican :
+~~~
+STATIC_PATHS = ['images', 'extra/CNAME']
+EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
+~~~
+
+Y listo , ya deberia de estar .
+
+![errorno](capturas/Captura de pantalla de 2017-12-08 19-43-15.png)
