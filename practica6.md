@@ -186,3 +186,79 @@ EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
 Y listo , ya deberia de estar .
 
 ![errorno](capturas/Captura de pantalla de 2017-12-08 19-43-15.png)
+
+# Tarea4
+
+-Integracion continua con la aplicacion tutorial de Django 
+
+-Primero , vamos a estudiar el fichero test.py del directorio /polls del proyecto djanngo 
+
+-Este fichero ejecuta una serie de pruebas que si son ciertas , ejecuta la aplicacion , para comprobar las pruebas ejecutamos
+~~~
+python manage.py test
+~~~
+
+Si lo ejecutamos veremos que todas las pruebas se han realizado correctamente . 
+
+Ahora estudiaremos este codigo y lo modificaremos para que alguna prueba sea erronea 
+
+A la siguiente funcion 
+~~~
+def create_question(question_text, days):
+    """
+    Creates a question with the given `question_text` and published the
+    given number of `days` offset to now (negative for questions published
+    in the past, positive for questions that have yet to be published).
+    """
+    time = timezone.now() + datetime.timedelta(days=days)
+    return Question.objects.create(question_text=question_text, pub_date=time)
+
+~~~
+
+La sustituimos por esta :
+~~~
+def create_question(question_text, days):
+    """
+    Creates a question with the given `question_text` and published the
+    given number of `days` offset to now (negative for questions published
+    in the past, positive for questions that have yet to be published).
+    """
+    time = timezone.now() + datetime.timedelta(days=days)
+    return Question.objects.create(question_text=question_text )
+~~~
+
+- Y al ejecutar de nuevo python manage.py test nos suelta este mensaje de error 
+~~~
+Ran 7 tests in 0.015s
+
+FAILED (errors=6)
+Destroying test database for alias 'default'...
+~~~
+
+
+Ahora vamos a configurar la integracion continua para que , al hacer un commit , se ejecute la prueba test dentro de travis :
+
+-Para ello primero creamos un fichero .travis.yml con el siguiente contenido :
+~~~
+language: python
+install:
+- pip install django==1.10
+script:
+- python manage.py test
+~~~
+
+-Activamos en el dashboard de travis el repositorio a monitorizar , y hacemos un commit y push en el repositorio desde nuestra terminal
+
+Si las pruebas salen satisfactoriamente , veremos lo siguiente en el dashboard y log de travis 
+
+![django_exito](capturas/Captura de pantalla de 2017-12-09 13-24-07.png)
+
+
+![django_dashboard](capturas/Captura de pantalla de 2017-12-09 13-24-43.png)
+
+
+Si ,por el contrario modificamos el fichero test.oy para que alguna prueba de erronea :
+
+![error_django](capturas/Captura de pantalla de 2017-12-09 13-27-58.png)
+
+![error_dashboard](capturas/Captura de pantalla de 2017-12-09 13-28-30.png)
