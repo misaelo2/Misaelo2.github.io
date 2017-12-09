@@ -19,3 +19,5 @@ En este Blog subire contenido de mis Practicas para que lo podais disfrutar todo
 
 [Practica5 : Instalacion CMS Mezzanime](https://misaelo2.github.io./practica5)
 
+[Practica6: Integracion Continua con Travis ](https://misaelo2.github.io./practica6)
+
