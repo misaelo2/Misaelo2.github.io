@@ -118,6 +118,5 @@ mvn clean install sakai:deploy -Dmaven.tomcat.home=$CATALINA_HOME -Djava.net.pre
 
 -Nuestro servidor Tomcat esta funcionando , accedemos a la url "/portal" y vemos el fruto de nuestros resultados :
 
-
-
+![sakai](capturas/Sakai.png)
  
