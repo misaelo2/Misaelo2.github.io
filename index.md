@@ -21,3 +21,5 @@ En este Blog subire contenido de mis Practicas para que lo podais disfrutar todo
 
 [Practica6: Integracion Continua con Travis ](https://misaelo2.github.io./practica6)
 
+[Practica7: servidor Tomcar con Sakai ](https://misaelo2.github.io./practica7)
+
