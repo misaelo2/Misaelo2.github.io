@@ -87,4 +87,24 @@ y para ejecutarlo docker start misaelo/nginx:v1
 
 Para hacer Mysql en un Contenedor :
 
+~~~
+docker pull mysql
+~~~
 
+Ahora ejecutamos una instancia de servidor mysql
+
+~~~
+ docker run --name mysql-server -e MYSQL_ROOT_PASSWORD=root -d mysql
+~~~
+
+Ahora nos conectamos al contenedor con la linea de comandos de mysql
+
+~~~
+docker run -it --link mysql-server:mysql --rm mysql sh -c 'exec mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD"'
+
+~~~
+
+Y si todo ha salido bien nos aparecera en el prompt mysql para introducir comandos 
+
+
+![mysql_docker](capturas/Captura de pantalla de 2018-01-24 09-40-11.png)
