@@ -120,21 +120,21 @@ Creamos un directorio vacio y accedemos a el , y creamos un archivo llamado "Doc
 En ese archivo añadimos las siguientes lineas 
 
 ~~~
-*cojemos la imagen debian*
+* cojemos la imagen debian 
 
 FROM debian:stretch
 
-*el creador del contenedor*
+* el creador del contenedor 
 MAINTAINER misael
 
-*los comandos a realizar cuando se ejecute el contenedor*
+* los comandos a realizar cuando se ejecute el contenedor
 RUN apt-get update \
 && apt-get install -y nginx
 
-*Seleccionar el puerto por el que escuchara nuestra maquina*
+* Seleccionar el puerto por el que escuchara nuestra maquina
 EXPOSE 80
 
-*Realizar los comandos una vez creado el contenedor*
+* Realizar los comandos una vez creado el contenedor
 CMD ["nginx", "-g", "daemon off;"]
 ~~~ 
 
@@ -145,7 +145,7 @@ Con esto , solo nos queda construir una imagen  a travez de nuestro docker file
 Docker build -t miprimeraimagencondockerfile ./ 
 ~~~
 
-*NOTESE QUE ESPECIFICO DONDE SE ENCUENTRA MI DOCKERFILE*
+* NOTESE QUE ESPECIFICO DONDE SE ENCUENTRA MI DOCKERFILE
 
 A partir de aqui , solo nos queda crear un contenedor a partir de la imagen generada por el dockerfile 
 
@@ -153,7 +153,7 @@ A partir de aqui , solo nos queda crear un contenedor a partir de la imagen gene
 docker run --name miprimerdockerfile -d  -p 80:80 nginx
 ~~~
 
-*la opcion -p indica la redireccion de puertos que haremos en nuestra propia maquina , y la ultima opcion especifica la imagen*
+* la opcion -p indica la redireccion de puertos que haremos en nuestra propia maquina , y la ultima opcion especifica la imagen
 
 Ahora accedemos a la ip de nuestra maquina y nos redirigira al contenedor 
 
