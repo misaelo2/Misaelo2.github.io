@@ -108,3 +108,72 @@ Y si todo ha salido bien nos aparecera en el prompt mysql para introducir comand
 
 
 ![mysql_docker](capturas/Captura de pantalla de 2018-01-24 09-40-11.png)
+
+
+# Tarea2 
+
+Ahora veremos la creacion de contenedores mediante archivos dockerfile .
+
+
+Creamos un directorio vacio y accedemos a el , y creamos un archivo llamado "Dockerfile"
+
+En ese archivo añadimos las siguientes lineas 
+
+~~~
+*cojemos la imagen debian*
+
+FROM debian:stretch
+
+*el creador del contenedor*
+MAINTAINER misael
+
+*los comandos a realizar cuando se ejecute el contenedor*
+RUN apt-get update \
+&& apt-get install -y nginx
+
+*Seleccionar el puerto por el que escuchara nuestra maquina*
+EXPOSE 80
+
+*Realizar los comandos una vez creado el contenedor*
+CMD ["nginx", "-g", "daemon off;"]
+~~~ 
+
+
+Con esto , solo nos queda construir una imagen  a travez de nuestro docker file 
+
+~~~
+Docker build -t miprimeraimagencondockerfile ./ 
+~~~
+
+*NOTESE QUE ESPECIFICO DONDE SE ENCUENTRA MI DOCKERFILE*
+
+A partir de aqui , solo nos queda crear un contenedor a partir de la imagen generada por el dockerfile 
+
+~~~
+docker run --name miprimerdockerfile -d  -p 80:80 nginx
+~~~
+
+*la opcion -p indica la redireccion de puertos que haremos en nuestra propia maquina , y la ultima opcion especifica la imagen*
+
+Ahora accedemos a la ip de nuestra maquina y nos redirigira al contenedor 
+
+![contenedor con Dockerfile](capturas/Captura de pantalla de 2018-01-26 09-52-34.png)
+
+Si queremos modificar ahora el contenido de un fichero dentro del contenedor añadimos al dockerfile 
+
+~~~
+ADD ./index.html /var/www/html/
+~~~
+ 
+por como esta configurado nginx por defecto , accedera a este fichero .
+
+creamos otra vez la imagen pero aumentamos la version 
+
+~~~
+docker build -t nginx:v2 ./
+docker run --name misegundocontenedordocker -d  -p 80:80 nginx:v2
+~~~
+
+Ahora accedemos al contenedor :
+
+![nginx modificado](capturas/Captura de pantalla de 2018-01-26 10-07-01.png)

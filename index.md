@@ -23,3 +23,5 @@ En este Blog subire contenido de mis Practicas para que lo podais disfrutar todo
 
 [Practica7: servidor Tomcar con Sakai ](https://misaelo2.github.io./practica7)
 
+[Practica8: Operaciones con contenedores   ](https://misaelo2.github.io./practica8)
+
