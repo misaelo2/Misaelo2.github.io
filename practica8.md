@@ -177,3 +177,122 @@ docker run --name misegundocontenedordocker -d  -p 80:80 nginx:v2
 Ahora accedemos al contenedor :
 
 ![nginx modificado](capturas/Captura de pantalla de 2018-01-26 10-07-01.png)
+
+# Tarea3
+
+-Ahora configuraremos contenedor por medios de variables de entorno y configuraremos nginx mediante un script de nuestra propia mano que ejecutara el contenedor 
+
+Aqui esta nuestro Dockerfile 
+~~~
+FROM debian:stretch
+
+MAINTAINER misael
+
+ENV DOCUMENTROOT /var/www/html
+ENV SERVERNAME  supercontenedor
+ADD ./dngix.sh /
+ENTRYPOINT ["/bin/bash","/dnginx.sh"]
+
+#RUN apt-get update \
+#&& apt-get install -y nginx
+
+EXPOSE 80
+
+#CMD ["nginx", "-g", "daemon off;"]
+~~~
+
+Hemos comentado las lineas porque todo eso lo haremos con nuestro script siguiente 
+
+~~~
+!#/bin/bash
+
+apt-get update && apt-get install -y nginx 
+
+echo "contenedor creado mediante variables"  > $DOCUMENTROOT/index.html
+
+nginx -g "daemon off;"
+~~~
+
+
+creamos la imagen como antes y el contenedor con 
+
+~~~
+docker build -t tarea3imagen 
+docker run --name tarea3container -p 80:80 -d 
+~~~
+Ahora al crear la imagen y acceder al server name nos aparece tal como lo queremos 
+
+![tarea3docker](capturas/Captura de pantalla de 2018-01-28 12-32-55.png)
+
+- Ahora modicaremos las variables de nuestro entorno en nuestro script y veremos el resultado 
+
+modificamos la variable de entorno de "DOCUMENTROOT" 
+
+~~~
+FROM debian:stretch
+
+MAINTAINER misael
+
+ENV DOCUMENTROOT /var/www/tarea3docker
+ENV SERVERNAME  supercontenedor
+ADD ./dngix.sh /
+ENTRYPOINT ["/bin/bash","/dnginx.sh"]
+EXPOSE 80
+~~~
+
+Ahora solo queda añadir al script que cree la carpeta con los permisos adecuador , y al lanzar el contenedor otra vez :
+
+![tarea3docker](capturas/Captura de pantalla de 2018-01-28 12-32-55.png)
+
+Pero esta vez , en otro documentROOT 
+
+
+# Tarea4 
+
+Ahora vamos a configurar un despliege automatico de nuestro repositorio automatico a nuestro docker hub 
+
+creamos un repositorio para docker y alli subimos nuestros archivos a traves de una maquina que no tenga docker 
+
+Como vemos , ya tenemos el escenario en nuestro github 
+
+![tarea4dcoker](capturas/Captura de pantalla de 2018-01-28 12-52-15.png)
+
+Ahora eliminamos en nuestro servidor docker los contenidos para luego bajarlos de nuevo y simular un entorno de desarrollo , pero antes ,
+
+Tenemos que configurar en nuestro docker hub un "automatic builds" y darle permisos de nuestro repositorio de github 
+
+![tarea4dockehub](capturas/Captura de pantalla de 2018-01-28 12-56-44.png)
+
+
+![dandopermisos](capturas/Captura de pantalla de 2018-01-28 12-58-04.png)
+
+-Ahora solo tenemos que crear un nuevo repositorio desde el panel grafico 
+
+![tarea4creando](capturas/Captura de pantalla de 2018-01-28 13-01-15.png)
+
+Seleccionamos el repositorio y algun comentario si queremos 
+
+![thefinaldcountdown](capturas/Captura de pantalla de 2018-01-28 13-02-35.png)
+
+como vemos ,  ya tenemos otro repo de docker listo para traernos con docker pull 
+
+
+-Ahora solo queda crear el contenedor con docker run y acceder a este 
+
+Si queremos cambiar el contenido del fichero , lo que tenemos que hacer es modificar el index.html , hacer un push en github y automaticamente se lanzara una imagen en el docker hub , que tendremos que bajarnos y lanzar de nuevo el contenedor 
+
+![trigering](capturas/Captura de pantalla de 2018-01-28 13-37-01.png)
+
+Con esto "forzamos" a docker build a desplegar automaticamente los cambios 
+
+Ahora bajamos la imagen y creamos un contenedor 
+
+~~~
+docker pull misaelo/tareadocker
+docker run -d  --name tarea4ocker -p 80:80 misaelo/tareadocker:latest
+~~~
+
+![docker4fin](capturas/Captura de pantalla de 2018-01-28 13-53-41.png)
+
+
+
