@@ -58,7 +58,76 @@ Con esto , si eliminamos el contenedor , solo tenemos que enganchar el volumen a
 Para comprobar la informacion contenida en el contenedor :
 
 ~~~
+
+~~~
 docker inspect bookmedik 
 ~~~
 
 Aqui nos mostrara el directorio en nuestro sistema de archivos local donde guarda los datos 
+
+Ahora creamos un dockerfile con una imagen base de debian y añadimos la aplicacion 
+(acordad situarnos en la carpeta del directorio creado)
+~~~
+FROM debian 
+
+
+ADD . /var/www/html
+
+RUN apt-get update \
+&& apt-get install -y apache2 \
+&& apt-get install  -y php libapache2-mod-php
+
+EXPOSE 80
+
+CMD apachectl -D FOREGROUND
+
+~~~
+
+Antes de buildear la imagen tenemos que retocar los parametros de la conexion en la base de datos en core/controller/Database.php
+
+~~~
+<?php
+class Database {
+        public static $db;
+        public static $con;
+        function Database(){
+                $this->user="bookmedik";$this->pass="bookmedik";$this->host="mysql";$this->ddbb="bookmedik";
+        }
+
+        function connect(){
+                $con = new mysqli($this->host,$this->user,$this->pass,$this->ddbb);
+                $con->query("set sql_mode=''");
+                return $con;
+        }
+
+        public static function getCon(){
+                if(self::$con==null && self::$db==null){
+                        self::$db = new Database();
+                        self::$con = self::$db->connect();
+                }
+                return self::$con;
+        }
+
+}
+?>
+~~~
+
+Buildeamos la imagen 
+
+~~~
+Docker build -t bookmedik .
+~~~
+
+Ahora creamos el contenedor con un volumen para guardar los logs de apache y lo enlazamos con el servidor mysql para que resuelva los nombres 
+
+~~~
+docker run --name bookmedik -d --link mysql:mysql -v logs_bookmedik:/var/log/apache2/ -p 80:80 bookmedik 
+~~~
+
+
+
+Ahora accedemos a la direccion de la maquina host 
+
+![conseguido ] (capturas/Captura de pantalla de 2018-02-07 19-41-01.png)
+
+
