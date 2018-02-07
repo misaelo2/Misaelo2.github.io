@@ -128,6 +128,6 @@ docker run --name bookmedik -d --link mysql:mysql -v logs_bookmedik:/var/log/apa
 
 Ahora accedemos a la direccion de la maquina host 
 
-![conseguido ] (capturas/Captura de pantalla de 2018-02-07 19-41-01.png)
+![conseguido ](capturas/Captura de pantalla de 2018-02-07 19-41-01.png)
 
 
