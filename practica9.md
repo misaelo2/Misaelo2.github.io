@@ -229,31 +229,29 @@ Ahora , como este despliege me sabe a poco , vamos a aumentar el numero de conte
 Manos a la obra :
 
 
-tenemos dos archivos extras :
 
-- www.conf ( configuracion de fhp-fpm para el contenedor 2)
 
-- default ( configuracion de nginx  para el contenedor 1)
+- nginx.conf ( configuracion de nginx  para el contenedor 1)
 
 
 Creamos el docker-compose.yml para que lo cree todo automaticamente 
 
 ~~~
-nginx:
-  image: nginx:latest
-  ports:
-    - "80:80"
-  volumes:
-    - ./default:/etc/nginx/sites-available/
-    - ./:/usr/share/nginx/html
-  links:
-    - php
+web:
+    image: nginx:latest
+    ports:
+        - "80:80"
+    volumes:
+        - ./:/var/www/html/
+        - ./nginx.conf:/etc/nginx/nginx.conf
+    links:
+        - php
 php:
-  image: php7.0-fpm:latest
-  volumes:
-    - ./www.conf:/etc/php/7.0/fpm/pool.d/
-  links:
-    - mysql
+    image: superphp
+    volumes:
+        - ./:/var/www/html
+    links:
+        - mysql
 mysql:
   image: mysql
   environment:
@@ -263,4 +261,12 @@ mysql:
     MYSQL_PASSWORD: bookmedik
   volumes:
     - bookmedik:/var/lib/mysql
+
+
 ~~~
+
+Ahora  lanzamos el escenario y accedemos a nuestra aplicacion
+
+![falta_alog](capturas/Captura de pantalla de 2018-02-11 16-46-50.png)
+
+
