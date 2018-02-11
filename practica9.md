@@ -12,7 +12,7 @@ Despliege de aplicaciones en Dockerfiles
 
 
 
-# Tarea1
+#Tarea1
 
 Para el despliege he elegido una aplicacion escrita en php que no dispone de repositorio oficial , asi nosotros nos la aviamos para desplegar esta aplicacion en contenedores 
 
@@ -129,5 +129,87 @@ docker run --name bookmedik -d --link mysql:mysql -v logs_bookmedik:/var/log/apa
 Ahora accedemos a la direccion de la maquina host 
 
 ![conseguido ](capturas/Captura de pantalla de 2018-02-07 19-41-01.png)
+
+
+
+#Tarea2
+
+Ahora vamos a desplegar la aplicacion con la imagen oficial de php de Docker Hub 
+
+Segun la documentacion oficial de la imagen , para desplegar php con apache usamos el siguiente dockerfile 
+
+~~~
+FROM php:7.0-apache
+
+ADD . /var/www/html
+
+#instalamos dependencias necesarias 
+
+RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+~~~
+
+Ahora etiquetamos la imagen y la subimos a nuestro docker hub :
+
+~~~
+docker tag bookmedik_php:latest  misaelo/bookmedik:v1
+docker push misaelo/bookmedik:v1
+~~~
+
+![php_bookmedik](capturas/Captura de pantalla de 2018-02-11 11-36-44.png)
+
+-Aqui esta mi repositorio de GitHub con el contexto de la imagen : [bookmedik](https://github.com/misaelo2/Bookmedik)
+
+Con esta imagen y nuestro antiguo contenedor de mysql , podemos crear la aplicacion , pero esta ves lanzaremos los dos mediante docker compose 
+
+docker compose no es mas que una herramienta que nos permite desplegar varios contenedores con la configuracion deseado que le hemos escrito en un archivo YML previamente definido en vez de tener que ejecutar "docker run" . Si habeis visto Ansible , es una cosa Muy parecida 
+
+
+Instalamos Docker Compose 
+
+~~~
+curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+
+chmod +x /usr/local/bin/docker-compose 
+docker-compose --version 
+~~~
+
+Con este ultimo comando podemos ver la version instalada de docker-compose , Ahora pasaremos a definir el escenario con un fichero YML :
+
+~~~
+mysql:
+   image: mysql
+   environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bookmedik 
+      MYSQL_USER: bookmedik
+      MYSQL_PASSWORD: bookmedik   
+   volumes:
+     - bookmedik:/var/lib/mysql
+bookmedik_php
+   image: bookmedik_php
+   links: 
+      -mysql
+   ports:
+      -"80:80"
+~~~
+* Nota , el fichero debe llamarse "docker-compose.yml"
+
+Ahora levantamos la herramienta docker-compose y creamos el escenario 
+
+~~~
+docker-compose up -d
+~~~
+
+- la opcion -d es para que nos muestre la salida del estado 
+
+Comprobamos los contenedores creados :
+
+![docker_compose](capturas/Captura de pantalla de 2018-02-11 12-10-26.png)
+
+* Nota , aun no tengo claro el porque docker-compose asigna esos nombres tan raros , tendre que investigar
+
+Accedemos a nuestra aplicacionsita nomas 
+
+![aplicansionsita](capturas/Captura de pantalla de 2018-02-11 12-28-29.png)
 
 
