@@ -6,13 +6,13 @@ Despliege de aplicaciones en Dockerfiles
 
 3. [Ejecucion de una aplicacion web php en Docker (3)](#tarea3)
 
-4. [Ejecucion de CMS en docker ] (#tarea4)
+4. [Ejecucion de CMS en docker ](#tarea4)
 
-5. [Ejecucion de CMS en docker (2) ] (#tarea5)
+5. [Ejecucion de CMS en docker (2) ](#tarea5)
 
 
 
-#Tarea1
+# Tarea1
 
 Para el despliege he elegido una aplicacion escrita en php que no dispone de repositorio oficial , asi nosotros nos la aviamos para desplegar esta aplicacion en contenedores 
 
@@ -54,9 +54,10 @@ docker run --name mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=bookmedik 
 cat schema.sql | docker exec -i mysql /usr/bin/mysql -u bookmedik --password=bookmedik bookmedik
 ~~~
 
+
+~~~
 Con esto , si eliminamos el contenedor , solo tenemos que enganchar el volumen a otro contenedor mysql 
 Para comprobar la informacion contenida en el contenedor :
-
 ~~~
 
 ~~~
@@ -64,6 +65,8 @@ docker inspect bookmedik
 ~~~
 
 Aqui nos mostrara el directorio en nuestro sistema de archivos local donde guarda los datos 
+
+
 
 Ahora creamos un dockerfile con una imagen base de debian y añadimos la aplicacion 
 (acordad situarnos en la carpeta del directorio creado)
@@ -80,7 +83,6 @@ RUN apt-get update \
 EXPOSE 80
 
 CMD apachectl -D FOREGROUND
-
 ~~~
 
 Antes de buildear la imagen tenemos que retocar los parametros de la conexion en la base de datos en core/controller/Database.php
@@ -132,7 +134,7 @@ Ahora accedemos a la direccion de la maquina host
 
 
 
-#Tarea2
+# Tarea2
 
 Ahora vamos a desplegar la aplicacion con la imagen oficial de php de Docker Hub 
 
@@ -213,3 +215,52 @@ Accedemos a nuestra aplicacionsita nomas
 ![aplicansionsita](capturas/Captura de pantalla de 2018-02-11 12-28-29.png)
 
 
+
+# Tarea3
+
+Ahora , como este despliege me sabe a poco , vamos a aumentar el numero de contenedores a tres  en los que serviremos :
+
+- Contenedor1 : Nginx 
+
+- Contenedor2 : php-fpm
+
+- Contenedor3 : nuestra aplicacion 
+
+Manos a la obra :
+
+
+tenemos dos archivos extras :
+
+- www.conf ( configuracion de fhp-fpm para el contenedor 2)
+
+- default ( configuracion de nginx  para el contenedor 1)
+
+
+Creamos el docker-compose.yml para que lo cree todo automaticamente 
+
+~~~
+nginx:
+  image: nginx:latest
+  ports:
+    - "80:80"
+  volumes:
+    - ./default:/etc/nginx/sites-available/
+    - ./:/usr/share/nginx/html
+  links:
+    - php
+php:
+  image: php7.0-fpm:latest
+  volumes:
+    - ./www.conf:/etc/php/7.0/fpm/pool.d/
+  links:
+    - mysql
+mysql:
+  image: mysql
+  environment:
+    MYSQL_ROOT_PASSWORD: root
+    MYSQL_DATABASE: bookmedik
+    MYSQL_USER: bookmedik
+    MYSQL_PASSWORD: bookmedik
+  volumes:
+    - bookmedik:/var/lib/mysql
+~~~
