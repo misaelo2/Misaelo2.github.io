@@ -270,3 +270,152 @@ Ahora  lanzamos el escenario y accedemos a nuestra aplicacion
 ![falta_alog](capturas/Captura de pantalla de 2018-02-11 16-46-50.png)
 
 
+# Tarea4 
+
+Realizaremos un despliege de un gestor de contenido multimedia en docker , en este caso , TEXTPATTERN :
+
+Nos descargamos el paquete desde su pagina oficial ,lo descomprimimos  y nos situamos en ese directorio
+
+creamos las imagenes necesarias con un dockerfile 
+
+~~~
+FROM debian 
+
+ADD ./textpattern-4.6.2 /var/www/html
+
+RUN apt-get update && apt-get install apache2 \
+&& apt-get install libapache2-mod-php7.0 php7.0-mysqli php7.0-xml
+
+CMD apachectl -D FOREGROUND
+
+~~~
+
+~~~
+Docker pull mysql 
+~~~
+
+Creamos los volumenes necesarios para hacer nuestra aplicacion persistente 
+~~~
+docker volume create --name textpattern
+docker volume create --name mysql
+~~~
+
+Esto hara que la informacion sea persistente 
+
+tambien editamos  un fichero en texpattern/config-sit.php con los datos de la conexion a mysql y le cambiamos el nombre por config.php y añadimos a ese fichero lo siguiente eliminando lo que habia antes :
+
+~~~
+<?php
+$txpcfg['db'] = 'textpattern';
+$txpcfg['user'] = 'textpattern';
+$txpcfg['pass'] = 'textpattern';
+$txpcfg['host'] = 'mysql';
+$txpcfg['table_prefix'] = '';
+$txpcfg['txpath'] = '/var/www/html/textpattern';
+$txpcfg['dbcharset'] = 'utf8mb4';
+?>
+~~~
+
+
+
+Ahora creamos un docker-compose.yml donde estara toda la magia :
+
+~~~
+mysql:
+   image: mysql
+   environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: textpattern
+      MYSQL_USER: textpattern
+      MYSQL_PASSWORD: textpattern
+   volumes:
+     - mysql:/var/lib/mysql
+
+textpattern:
+   image: textpattern
+   links:
+      -mysql
+   ports:
+      -"80:80"
+   volumes: 
+      - textpattern:/var/www/html
+~~~
+
+![textpattern](capturas/Captura de pantalla de 2018-02-12 18-07-37.png)
+
+Como observamos , la aplicacion se ha desplegado correctamente
+
+*Nota : debido a esta es la primera instalacion de cms , no tengo las tablas creados y tengo que seguir los pasos de configuracion 
+que , traduciendose , hay que cambiar un fichero manualmente en el contenedor . lo se , los contenedores no son para eso , pero , una vez hayamos creado la base de datos debido a que se guarda en un volumen no hara falta mas este paso*
+~~~
+docker cp textpattern-4.6.2/textpattern/config.php  prueba_textpattern_1:/var/www/html/textpattern
+~~~
+
+![conseguido](capturas/Captura de pantalla de 2018-02-12 19-07-14.png) 
+
+Ya esta listo , como observacion final diria que este CMS NO ESTA HECHO PARA SER DESPLEGADO EN CONTENEDORES  y eso se nota a la hora de tener que configurar la base de datos . 
+
+
+
+# Tarea5
+
+Ahora , realizaremos el despliege de un CMS usando la documentacion oficial de docker hub 
+Nos descargamos la imagen 
+~~~
+docker pull drupal
+~~~
+Preparamos el docker compose 
+
+~~~
+mysql:
+   image: mysql
+   environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+   volumes:
+     - mysql:/var/lib/mysql
+
+textpattern:
+   image: drupal
+   links:
+      -mysql
+   ports:
+      -"80:80"
+~~~
+
+
+![drupal](capturas/Captura de pantalla de 2018-02-12 20-05-08.png)
+
+sencillo , rapido y para toda la familia, esto si que es un CMS en condiciones ¡ 
+
+
+![bd](capturas/Captura de pantalla de 2018-02-12 20-06-12.png)
+
+
+Aqui vemos drupal instalado :
+
+![drupal](capturas/Captura de pantalla de 2018-02-12 20-27-19.png)
+
+nota : se ve sin estilos porque al instalar he configurado la instalacion minima y no he configurado un volumen para los themes 
+
+Si vemos los logs del contenedor veremos como no nos da fallo de que no se encuentra algun fichero css
+~~~
+172.17.0.1 - - [12/Feb/2018:19:30:43 +0000] "GET /sites/default/files/js/js_ei1vH-V_SQc6NPapxfNNKWz22B_AMHNw0wAScJrimbk.js HTTP/1.1" 200 34189 "http://localhost/admin/content" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
+172.17.0.1 - - [12/Feb/2018:19:30:48 +0000] "GET /admin/content HTTP/1.1" 200 2367 "http://localhost/admin/content" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
+172.17.0.1 - - [12/Feb/2018:19:30:48 +0000] "GET /sites/default/files/js/js_ei1vH-V_SQc6NPapxfNNKWz22B_AMHNw0wAScJrimbk.js HTTP/1.1" 200 34189 "http://localhost/admin/content" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
+172.17.0.1 - - [12/Feb/2018:19:30:51 +0000] "GET / HTTP/1.1" 302 853 "http://localhost/admin/content" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
+172.17.0.1 - - [12/Feb/2018:19:30:51 +0000] "GET /user/1 HTTP/1.1" 200 2071 "http://localhost/admin/content" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
+172.17.0.1 - - [12/Feb/2018:19:30:51 +0000] "GET /sites/default/files/js/js_7iAMY-QogFSl0s3kbbylsdZDiyt5vmx9h5DXO55pYGY.js HTTP/1.1" 200 2925 "http://localhost/user/1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
+172.17.0.1 - - [12/Feb/2018:19:30:51 +0000] "GET /sites/default/files/css/css_ySMN6YAkrL93FpFl1k5IR8uT3McTZRC0iiihUqlOvIg.css?0 HTTP/1.1" 200 2267 "http://localhost/user/1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
+172.17.0.1 - - [12/Feb/2018:19:30:54 +0000] "GET /node/add HTTP/1.1" 200 1986 "http://localhost/user/1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
+172.17.0.1 - - [12/Feb/2018:19:31:02 +0000] "GET /admin/structure/types/add HTTP/1.1" 200 4566 "http://localhost/node/add" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
+172.17.0.1 - - [12/Feb/2018:19:31:07 +0000] "GET /sites/default/files/css/css_DoDt1X0KSlkyGCFQy7-ZM7m_vcyk0SubsI9DLvSkYgs.css?0 HTTP/1.1" 200 3747 "http://localhost/admin/structure/types/add" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
+172.17.0.1 - - [12/Feb/2018:19:31:07 +0000] "GET /sites/default/files/js/js_Vhw_sIDGvKrY1CgMvT6eAIH7KZzr4dFW4SDku-J-c4w.js HTTP/1.1" 200 38607 "http://localhost/admin/structure/types/add" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
+172.17.0.1 - - [12/Feb/2018:19:31:52 +0000] "GET / HTTP/1.1" 302 854 "http://localhost/admin/structure/types/add" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
+172.17.0.1 - - [12/Feb/2018:19:31:52 +0000] "GET /user/1 HTTP/1.1" 200 2071 "http://localhost/admin/structure/types/add" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
+172.17.0.1 - - [12/Feb/2018:19:31:52 +0000] "GET /sites/default/files/css/css_ySMN6YAkrL93FpFl1k5IR8uT3McTZRC0iiihUqlOvIg.css?0 HTTP/1.1" 200 2267 "http://localhost/user/1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
+172.17.0.1 - - [12/Feb/2018:19:31:52 +0000] "GET /sites/default/files/js/js_BKcMdIbOMdbTdLn9dkUq3KCJfIKKo2SvKoQ1AnB8D-g.js HTTP/1.1" 200 681 "http://localhost/user/1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
+172.17.0.1 - - [12/Feb/2018:19:31:52 +0000] "GET /sites/default/files/js/js_7iAMY-QogFSl0s3kbbylsdZDiyt5vmx9h5DXO55pYGY.js HTTP/1.1" 200 2924 "http://localhost/user/1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
+~~~
