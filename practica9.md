@@ -396,7 +396,7 @@ sencillo , rapido y para toda la familia, esto si que es un CMS en condiciones Â
 
 Aqui vemos drupal instalado :
 
-![drupal](capturas/Captura de pantalla de 2018-02-12 20-27-19.png)
+![drupal_listo](capturas/Captura de pantalla de 2018-02-12 20-27-19.png)
 
 nota : se ve sin estilos porque al instalar he configurado la instalacion minima y no he configurado un volumen para los themes 
 
