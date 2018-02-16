@@ -233,6 +233,48 @@ Manos a la obra :
 
 - nginx.conf ( configuracion de nginx  para el contenedor 1)
 
+~~~
+user  nginx;
+worker_processes  1;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+server {
+    listen 80;
+    index index.php;
+    server_name localhost;
+    error_log  /var/log/nginx/error.log;
+    access_log /var/log/nginx/access.log;
+    root /var/www/html;
+
+   location ~ \.(js|css|png) {
+        try_files $uri $uri/;
+    }
+
+
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass php:9000;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+    }
+  }
+  
+~~~
+
+
+
 
 Creamos el docker-compose.yml para que lo cree todo automaticamente 
 
