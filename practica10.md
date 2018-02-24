@@ -31,7 +31,7 @@ ADD gestion.conf /etc/apache2/sites-available/gestion.conf
 
 RUN apt-get update \
 && apt-get install -y apache2 \
-&& apt-get install  -y  python python-pip libapache2-mod-wsgi \
+.&& apt-get install  -y  python python-pip libapache2-mod-wsgi \
 && apt-get install python-dev
 
 EXPOSE 80
@@ -95,5 +95,72 @@ docker run -d --name gestion -v gestion:/var/lib/SuperDB -p 80:80  gestiongn1
 Y comprobamos que la aplicacion funciona correctamente 
 
 ![gestion1](capturas/gestion1.png) 
+
+
+
+# Tarea2 
+
+Ahora Desplegaremos la aplicacioncon un contenedor mysql y la aplicacion en un contenedor con la imagen de python oficial 
+
+
+Primero tenemos que crear un Dockerfile que creara nuestra aplicacion
+
+~~~
+FROM python:2
+
+WORKDIR /gestion
+
+ADD  iaw_gestionGN/ /gestion
+
+RUN pip install --no-cache-dir -r requirements.txt \
+&& python manage.py migrate \
+&& python manage.py loaddata datos.json
+
+~~~
+
+y ahora creamos el docker compose :
+
+~~~
+version: '3'
+
+services:
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: gestion 
+      MYSQL_USER: gestion
+      MYSQL_PASSWORD: gestion
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+        ports:
+      - "8000:8000"
+    depends_on:
+      - db
+~~~
+
+***IMPORTANTE : si tienes una version docker compose que no soporta esta version de fichero , usa esta***
+~~~
+
+
+
+Y modificamos nuestra aplicacion para que se conecte a una base de datos 
+
+en el fichero settings.py :
+
+~~~
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'gestion',
+        'USER': 'gestion',
+        'PASSWORD': 'gestion',
+        'HOST': os.environ.get('MYSQL_NAME'),
+        'PORT': '3306',
+    }
+}
+~~~
+
 
 
