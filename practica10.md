@@ -62,11 +62,19 @@ ServerName www.iaw-gestiona.com
         ServerAdmin webmaster@localhost
         DocumentRoot /var/www/html/
 
-        WSGIDaemonProcess www.iaw-gestiona.com python-path=/var/www/html/
+
+	Alias /static/ /var/www/html/static/
+
+	<Directory  /var/www/html/static/>
+	Require all granted
+	</Directory>
+
+	
+	WSGIDaemonProcess www.iaw-gestiona.com python-path=/var/www/html/
         WSGIProcessGroup www.iaw-gestiona.com
         WSGIScriptAlias / /var/www/html/gestion/wsgi.py
 
-
+	
         <Directory /var/www/html/gestion>
                 <Files wsgi.py>
                 Require all granted
@@ -79,5 +87,13 @@ Ahora creamos la imagen del contenedor que contendra la base de datos , guardare
 docker volume create gestion
 ~~~
 
-* Permisos de la DB
-* Alias de estilos
+Y ahora ejecutamos el comando run especificando que la base de datos se guarde en nuestro contenedor 
+~~~
+docker run -d --name gestion -v gestion:/var/lib/SuperDB -p 80:80  gestiongn1 
+~~~
+
+Y comprobamos que la aplicacion funciona correctamente 
+
+![gestion1](capturas/gestion1.png) 
+
+
