@@ -113,7 +113,6 @@ WORKDIR /gestion
 ADD  iaw_gestionGN/ /gestion
 
 RUN pip install --no-cache-dir -r requirements.txt \
-&& python manage.py migrate \
 && python manage.py loaddata datos.json
 
 ~~~
@@ -142,7 +141,23 @@ services:
 
 ***IMPORTANTE : si tienes una version docker compose que no soporta esta version de fichero , usa esta***
 ~~~
-
+mysql:
+   image: mysql
+   environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: gestion
+      MYSQL_USER: gestion
+      MYSQL_PASSWORD: gestion
+   volumes:
+     - gestion:/var/lib/mysql
+gestion:
+   image: gestiongn2
+   command: python manage.py runserver 0.0.0.0:80
+   links:
+      - mysql
+   ports:
+      - "80:80
+~~~
 
 
 Y modificamos nuestra aplicacion para que se conecte a una base de datos 
@@ -156,11 +171,34 @@ DATABASES = {
         'NAME': 'gestion',
         'USER': 'gestion',
         'PASSWORD': 'gestion',
-        'HOST': os.environ.get('MYSQL_NAME'),
+        'HOST': 'mysql',
         'PORT': '3306',
     }
 }
 ~~~
 
+Ahora tenemosla aplicacion funcionando , pero tendremos que rellenar y crear la base de datos 
 
+~~~
+ docker exec root_gestion_1 python manage.py migrate
+~~~
+
+y ahora lo rellenamos
+~~~
+docker exec root_gestion_1 python manage.py loaddata datos.json
+~~~
+
+Con esto , ya solo nos queda acceder a la aplicacion 
+
+![gestion2](capturas/gestion2.png)
+
+
+
+# Tarea3
+
+Ahora desplegaremos tres contenedores , mysql , nuestra aplicacion de django en un contenedor nginx  y un contenedor proxy 
+
+Nuestro Dockerfile :
+
+~~~
 
